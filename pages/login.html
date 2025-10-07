@@ -9,6 +9,7 @@
 </head>
 <body>
   <div class="logo-container"><img class="logo" src="../img/logo_tech.boost.png" alt="Logo"></div>
+
   <header class="site-header">
     <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
     <nav class="site-nav">
@@ -22,11 +23,32 @@
   </header>
 
   <main class="container">
-    <h1 class="page-title">Ingresar</h1>
-    <fieldset class="form">
+    <h1 class="page-title">Cuenta</h1>
+
+    <div class="tabs">
+      <div id="tab-in" class="tab active">Ingresar</div>
+      <div id="tab-up" class="tab">Crear cuenta</div>
+    </div>
+
+    <!-- Login -->
+    <fieldset id="form-login" class="form">
       <label>Email <input id="login-email" type="email" placeholder="tu@email.com"></label>
-      <div class="form-actions"><button class="btn btn-primary" id="login-btn">Ingresar</button></div>
+      <label>Contraseña <input id="login-pass" type="password" placeholder="••••••••"></label>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-login">Ingresar</button>
+      </div>
     </fieldset>
+
+    <!-- Registro -->
+    <fieldset id="form-register" class="form" style="display:none">
+      <label>Email <input id="reg-email" type="email" placeholder="tu@email.com"></label>
+      <label>Contraseña <input id="reg-pass" type="password" placeholder="Mínimo 6 caracteres"></label>
+      <div class="form-actions">
+        <button class="btn btn-primary" id="btn-register">Crear cuenta</button>
+      </div>
+    </fieldset>
+
+    <p class="lead" style="margin-top:10px">Admin: <code>veralautharo@gmail.com</code> (tendrá permisos para gestionar “Trabajos”).</p>
   </main>
 
   <footer class="site-footer">© 2025 Tech.Boost_</footer>

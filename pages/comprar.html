@@ -1,76 +1,50 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Contacto — Tech.Boost_</title>
-  <link rel="stylesheet" href="../styles.css" />
-  <script src="../script.js" defer></script>
+  <link rel="stylesheet" href="../styles.css">
+  <script defer src="../script.js"></script>
 </head>
-
 <body>
-  <!-- Logo -->
-<div class="logo-container centered-logo">
-  <img src="../img/logo_tech.boost.png" alt="Logo Tech.Boost_" class="logo">
-</div>
-
-
-  <!-- Header -->
+  <div class="logo-container"><img class="logo" src="../img/logo_tech.boost.png" alt="Logo"></div>
   <header class="site-header">
     <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
-    <nav class="site-nav" aria-label="Principal">
+    <nav class="site-nav">
       <a href="listado_tabla.html">Tabla</a>
       <a href="listado_box.html">Catálogo</a>
       <a href="trabajos.html">Trabajos</a>
-      <a href="comprar.html" class="btn btn-primary active">Contacto</a>
+      <a class="btn active" href="comprar.html">Contacto</a>
       <a href="login.html" id="nav-login">Ingresar</a>
-      <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none;">Mi Perfil</a>
+      <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
     </nav>
   </header>
 
   <main class="container">
     <h1 class="page-title">Formulario de contacto</h1>
-
-    <form id="form-contacto" class="form">
-      <fieldset>
-        <label>
-          Nombre
-          <input type="text" name="nombre" placeholder="Tu nombre completo" required />
-        </label>
-
-        <label>
-          Email
-          <input type="email" name="email" placeholder="tucorreo@gmail.com" required />
-        </label>
-
-        <label>
-          Teléfono
-          <input type="tel" name="telefono" placeholder="Ej: +54 9 3764 12-3456" />
-        </label>
-
-        <label>
-          Tipo de servicio
-          <select name="servicio" required>
-            <option value="">Seleccione una opción</option>
-            <option>Reparación</option>
-            <option>Mantenimiento Notebook</option>
-            <option>Mantenimiento Consola</option>
-            <option>Mantenimiento PC</option>
-            <option>Mantenimiento Tarjetas Gráficas (GPU)</option>
-            <option>Otros</option>
-          </select>
-        </label>
-      </fieldset>
-
+    <fieldset class="form">
+      <label>Nombre <input type="text" placeholder="Tu nombre completo"></label>
+      <label>Email <input type="email" placeholder="tucorreo@gmail.com"></label>
+      <label>Teléfono <input type="tel" placeholder="Ej: +54 9 3764 12-3456"></label>
+      <label>Tipo de servicio
+        <select>
+          <option value="">Seleccione una opción</option>
+          <option>Reparación</option>
+          <option>Mantenimiento Notebook</option>
+          <option>Mantenimiento Consola</option>
+          <option>Mantenimiento PC</option>
+          <option>Mantenimiento Tarjetas Gráficas GPU</option>
+          <option>Otros</option>
+        </select>
+      </label>
       <div class="form-actions">
-        <button type="reset" class="btn">Limpiar</button>
-        <button type="submit" class="btn btn-primary">Solicitar servicio</button>
+        <button class="btn">Limpiar</button>
+        <button class="btn btn-primary">Solicitar servicio</button>
       </div>
-
-      <p id="msg" class="alert success" hidden>¡Gracias! Tu solicitud fue enviada correctamente.</p>
-    </form>
+    </fieldset>
   </main>
 
-  <footer class="site-footer">© 2025 Tech.Boost_ · Repositorio personal</footer>
+  <footer class="site-footer">© 2025 Tech.Boost_</footer>
 </body>
 </html>

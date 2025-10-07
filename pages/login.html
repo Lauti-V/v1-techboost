@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Ingresar — Tech.Boost_</title>
+  <title>🖥️ Tech.Boost_ — Ingresar</title>
   <link rel="stylesheet" href="../styles.css">
   <script defer src="../script.js"></script>
 </head>
@@ -13,7 +13,6 @@
   <header class="site-header">
     <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
     <nav class="site-nav">
-      <a href="listado_tabla.html">Tabla</a>
       <a href="listado_box.html">Catálogo</a>
       <a href="trabajos.html">Trabajos</a>
       <a href="comprar.html" class="btn">Contacto</a>
@@ -23,32 +22,15 @@
   </header>
 
   <main class="container">
-    <h1 class="page-title">Cuenta</h1>
-
-    <div class="tabs">
-      <div id="tab-in" class="tab active">Ingresar</div>
-      <div id="tab-up" class="tab">Crear cuenta</div>
-    </div>
-
-    <!-- Login -->
-    <fieldset id="form-login" class="form">
-      <label>Email <input id="login-email" type="email" placeholder="tu@email.com"></label>
-      <label>Contraseña <input id="login-pass" type="password" placeholder="••••••••"></label>
+    <h1 class="page-title">Ingresar</h1>
+    <form id="login-form" class="form">
+      <label>Email <input id="login-email" type="email" required></label>
+      <label>Contraseña <input id="login-password" type="password" required></label>
       <div class="form-actions">
-        <button class="btn btn-primary" id="btn-login">Ingresar</button>
+        <button class="btn btn-primary" type="submit">Ingresar</button>
       </div>
-    </fieldset>
-
-    <!-- Registro -->
-    <fieldset id="form-register" class="form" style="display:none">
-      <label>Email <input id="reg-email" type="email" placeholder="tu@email.com"></label>
-      <label>Contraseña <input id="reg-pass" type="password" placeholder="Mínimo 6 caracteres"></label>
-      <div class="form-actions">
-        <button class="btn btn-primary" id="btn-register">Crear cuenta</button>
-      </div>
-    </fieldset>
-
-    <p class="lead" style="margin-top:10px">Admin: <code>veralautharo@gmail.com</code> (tendrá permisos para gestionar “Trabajos”).</p>
+      <p class="lead">¿No tenés cuenta? <a href="register.html">Crear cuenta</a></p>
+    </form>
   </main>
 
   <footer class="site-footer">© 2025 Tech.Boost_</footer>

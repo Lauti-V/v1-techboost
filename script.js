@@ -1,454 +1,241 @@
-/********************
- * Utilidades
- ********************/
-const qs  = (s) => document.querySelector(s);
-const qsa = (s) => Array.from(document.querySelectorAll(s));
+/* ========= CONFIG ========= */
+const ADMIN_EMAIL = "veralautharo@gmail.com";
+const IN_PAGES = location.pathname.includes("/pages/");
+const IMG = (n) => (IN_PAGES ? `../img/${n}` : `img/${n}`);
 
-/********************
- * Datos base: Recursos (usados por tabla/cards/ficha)
- * Importante: como se renderiza desde /pages/, las imágenes van con ../img/
- ********************/
+const getUser = () => localStorage.getItem("usuario") || "";
+const setUser = (email) => localStorage.setItem("usuario", email);
+const clearUser = () => localStorage.removeItem("usuario");
+const isAdmin = () => getUser().toLowerCase() === ADMIN_EMAIL.toLowerCase();
+
+/* ========= NAV/LOGIN ========= */
+function actualizarNavegacion(){
+  const login = document.getElementById("nav-login");
+  const perfil = document.getElementById("nav-perfil");
+  if (login && perfil){
+    if (getUser()){ login.style.display="inline-block"; perfil.style.display="inline-block"; }
+    login.style.display = getUser() ? "none" : "inline-block";
+    perfil.style.display = getUser() ? "inline-block" : "none";
+  }
+}
+
+function bindLoginPage(){
+  const btn = document.getElementById("login-btn");
+  if (!btn) return;
+  btn.addEventListener("click", ()=>{
+    const email = (document.getElementById("login-email").value||"").trim();
+    if(!email) return alert("Ingresá un email");
+    setUser(email);
+    location.href = isAdmin() ? "trabajos.html" : "../index.html";
+  });
+}
+
+function bindLogout(){
+  const out = document.getElementById("logout");
+  if (!out) return;
+  out.addEventListener("click", ()=>{
+    clearUser();
+    location.href = IN_PAGES ? "../index.html" : "index.html";
+  });
+}
+
+/* ========= RECURSOS (Catálogo/Tabla/Ficha) ========= */
 const recursos = [
   {
-    id: 1,
-    titulo: "Claves para Windows 10/11",
-    categoria: "Claves",
-    nivel: "Inicial",
-    img: "../img/windows_llave.jpg",
-    resumen: "Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
+    id:1,
+    titulo:"Claves para Windows 10/11",
+    categoria:"Claves",
+    nivel:"Inicial",
+    img:IMG("windows_llave.jpg"),
+    resumen:"Pasos simples para mejorar rendimiento, limpieza temporal y arranque.",
+    pasos:[
+      "Desinstalar bloatware innecesario.",
+      "Limpiar temporales (Win+R → %temp%).",
+      "Desactivar apps en segundo plano innecesarias.",
+      "Actualizar drivers y Windows Update.",
+      "Comprobar estado del disco (TRIM/SMART).",
+    ],
   },
   {
-    id: 2,
-    titulo: "Cuidados esenciales para tu notebook",
-    categoria: "Hardware",
-    nivel: "Inicial",
-    img: "../img/notebook.jpg",
-    resumen: "Consejos prácticos para prolongar la vida útil de tu notebook.",
+    id:2,
+    titulo:"Cuidados esenciales para tu notebook",
+    categoria:"Hardware",
+    nivel:"Inicial",
+    img:IMG("notebook.jpeg"),
+    resumen:"Consejos prácticos para prolongar la vida útil de tu notebook.",
+    pasos:["Base refrigerante","No tapar ventilaciones","Limpieza de polvo","Cuidado de batería"],
   },
   {
-    id: 3,
-    titulo: "Optimización básica de Windows 11",
-    categoria: "Optimización",
-    nivel: "Intermedio",
-    img: "../img/windows_opt.jpg",
-    resumen: "Servicios, inicio, desbloat, drivers y ajustes visuales.",
+    id:3,
+    titulo:"Optimización básica de Windows 11",
+    categoria:"Optimización",
+    nivel:"Intermedio",
+    img:IMG("windows_opt.jpg"),
+    resumen:"Servicios, inicio, desbloat, drivers y ajustes visuales.",
+    pasos:["Deshabilitar inicio","Servicios innecesarios","Desbloat con precaución","Actualizar drivers","Punto de restauración"],
   },
   {
-    id: 4,
-    titulo: "Instalar paquete de Office",
-    categoria: "Software",
-    nivel: "Inicial",
-    img: "../img/office_instalar.jpg",
-    resumen: "Guía para descargar, instalar y activar Microsoft Office correctamente.",
-  }
+    id:4,
+    titulo:"Instalar paquete de Office",
+    categoria:"Software",
+    nivel:"Inicial",
+    img:IMG("office_instalar.jpg"),
+    resumen:"Descargar, instalar y activar Microsoft Office correctamente.",
+    pasos:["Descargar instalador","Instalar edición","Activación segura","Verificar licencia"],
+  },
 ];
 
-
-/********************
- * Autenticación (localStorage)
- ********************/
-const LS_USERS_KEY   = "users";
-const LS_SESSION_KEY = "session";
-
-const getUsers    = () => JSON.parse(localStorage.getItem(LS_USERS_KEY) || "[]");
-const setUsers    = (a) => localStorage.setItem(LS_USERS_KEY, JSON.stringify(a));
-const getSession  = () => JSON.parse(localStorage.getItem(LS_SESSION_KEY) || "null");
-const setSession  = (s) => localStorage.setItem(LS_SESSION_KEY, JSON.stringify(s));
-const clearSession= () => localStorage.removeItem(LS_SESSION_KEY);
-
-function hash(s) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) { h = (h << 5) - h + s.charCodeAt(i); h |= 0; }
-  return String(h);
+function renderRecursos(){
+  const grid = document.getElementById("grid-recursos");
+  if(!grid) return;
+  grid.innerHTML = recursos.map(r=>`
+    <article class="card">
+      <img src="${r.img}" alt="${r.titulo}" onerror="this.src='${IMG("windows_llave.jpg")}'">
+      <div class="pad">
+        <h3>${r.titulo}</h3>
+        <p class="muted">${r.categoria} · ${r.nivel}</p>
+        <p>${r.resumen}</p>
+        <a href="producto.html?id=${r.id}" class="btn">Leer más</a>
+      </div>
+    </article>
+  `).join("");
 }
 
-function paintNavAuth() {
-  const s = getSession();
-  const navLogin = qs("#nav-login");
-  const navPerfil = qs("#nav-perfil");
-  if (!navLogin || !navPerfil) return;
-  if (s) { navLogin.style.display = "none"; navPerfil.style.display = "inline-block"; }
-  else   { navLogin.style.display = "inline-block"; navPerfil.style.display = "none"; }
-}
-
-/********************
- * Listados (tabla/cards) y ficha
- ********************/
-function renderTabla() {
-  const tbody = qs("#tbody-recursos");
-  if (!tbody) return;
-  tbody.innerHTML = recursos.map((r, i) => `
+function renderTablaRecursos(){
+  const tbody = document.getElementById("tbody-recursos");
+  if(!tbody) return;
+  tbody.innerHTML = recursos.map((r,i)=>`
     <tr>
       <td>${i+1}</td>
       <td>${r.titulo}</td>
-      <td><span class="badge">${r.categoria}</span></td>
+      <td>${r.categoria}</td>
       <td>${r.nivel}</td>
       <td><a class="btn" href="producto.html?id=${r.id}">Ver</a></td>
     </tr>
   `).join("");
 }
 
-function renderGrid() {
-  const g = qs("#grid-recursos");
-  if (!g) return;
-  g.innerHTML = recursos.map(r => `
-    <article class="card">
-      <img src="${r.img}" alt="${r.titulo}">
-      <div class="pad">
-        <h3>${r.titulo}</h3>
-        <p class="muted">${r.categoria} · ${r.nivel}</p>
-        <p>${r.resumen}</p>
-        <a class="btn" href="producto.html?id=${r.id}">Leer más</a>
-      </div>
-    </article>
-  `).join("");
-}
-
-function renderFicha() {
-  const box = qs("#ficha");
-  if (!box) return;
-  const id = new URLSearchParams(location.search).get("id");
-  const r = recursos.find(x => String(x.id) === String(id));
-  if (!r) { box.innerHTML = "<p>No se encontró el recurso.</p>"; return; }
-
-  box.innerHTML = `
-    <img src="${r.img}" alt="${r.titulo}">
+function renderProducto(){
+  const cont = document.getElementById("ficha");
+  if(!cont) return;
+  const id = Number(new URLSearchParams(location.search).get("id"));
+  const item = recursos.find(r=>r.id===id);
+  if(!item){ cont.innerHTML = "<p>No se encontró el recurso.</p>"; return; }
+  cont.innerHTML = `
+    <img src="${item.img}" alt="${item.titulo}" onerror="this.src='${IMG("windows_llave.jpg")}'">
     <div>
-      <h1>${r.titulo}</h1>
-      <p class="muted">${r.categoria} · ${r.nivel}</p>
-      <p>${r.resumen}</p>
+      <h2>${item.titulo}</h2>
+      <p><strong>Categoría:</strong> ${item.categoria}</p>
+      <p><strong>Nivel:</strong> ${item.nivel}</p>
+      <p>${item.resumen}</p>
       <h3>Pasos</h3>
-      <div class="specs">
-        ${r.pasos.map(p => `<div class="feature">${p}</div>`).join("")}
-      </div>
-      ${r.enlaces?.length ? `
-        <h3 style="margin-top:16px">Enlaces</h3>
-        <ul>${r.enlaces.map(e => `<li><a class="btn" href="${e.href}" target="_blank" rel="noopener">${e.t}</a></li>`).join("")}</ul>
-      ` : ""}
-    </div>
-  `;
+      <ul>${item.pasos.map(p=>`<li>${p}</li>`).join("")}</ul>
+      <a href="listado_box.html" class="btn">Volver</a>
+    </div>`;
 }
 
-/********************
- * Contacto (form simple)
- ********************/
-function renderCarrito() {
-  // Nota: el formulario fue simplificado; no hay "carrito".
-  // Mantenemos el mensaje de éxito.
-  const form = qs("#form-contacto");
-  const msg  = qs("#msg");
-  if (!form) return;
-  form.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    msg?.removeAttribute("hidden");
-    form.reset();
-  });
+/* ========= TRABAJOS (CRUD LocalStorage) ========= */
+const LS_WORKS = "tb_works_v1";
+const getWorks = ()=>{ try{ return JSON.parse(localStorage.getItem(LS_WORKS))||[] }catch{return []} };
+const setWorks = (arr)=>localStorage.setItem(LS_WORKS,JSON.stringify(arr));
+function seedWorksIfEmpty(){
+  if(getWorks().length) return;
+  setWorks([
+    { id:Date.now(), titulo:"Cambio de pantalla touch Notebook ACER", tipo:"Reparación", fecha:"2025-10-05", descripcion:"Cambio de flex y pantalla touch.", img:IMG("trabajo1.jpg"), reel:"" },
+    { id:Date.now()+1, titulo:"Limpieza + pasta térmica", tipo:"Mantenimiento", fecha:"2025-01-31", descripcion:"Limpieza interna, cambio de pasta y revisión general.", img:IMG("trabajo2.jpg"), reel:"" },
+  ]);
+}
+const formatDate = (iso)=>{ if(!iso) return "-"; const d=new Date(iso); return d.toLocaleDateString("es-AR",{day:"2-digit",month:"2-digit",year:"numeric"}) };
+
+function fillWorkForm(w={}){
+  const q=id=>document.getElementById(id);
+  q("w-id").value = w.id||"";
+  q("w-title").value = w.titulo||"";
+  q("w-type").value = w.tipo||"Reparación";
+  q("w-date").value = w.fecha||"";
+  q("w-desc").value = w.descripcion||"";
+  q("w-img").value = w.img||IMG("trabajo1.jpg");
+  q("w-reel").value = w.reel||"";
 }
 
-/********************
- * Registro / Login
- ********************/
-function bindRegister() {
-  const f = qs("#form-register");
-  if (!f) return;
-  f.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const nombre = f.nombre.value.trim();
-    const email  = f.email.value.trim().toLowerCase();
-    const pass   = f.pass.value;
-    const users  = getUsers();
-    if (users.some(u => u.email === email)) { alert("Ese email ya existe."); return; }
-    users.push({ nombre, email, passHash: hash(pass) });
-    setUsers(users);
-    setSession({ email, nombre });
-    location.href = "perfil.html";
-  });
-}
+function renderTrabajos(){
+  const tbody = document.getElementById("tbody-works");
+  if(!tbody) return;
+  const admin = isAdmin();
+  const thAcc = document.getElementById("th-acciones");
+  if (thAcc) thAcc.style.display = admin ? "" : "none";
 
-function bindLogin() {
-  const f = qs("#form-login");
-  if (!f) return;
-  f.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const email = f.email.value.trim().toLowerCase();
-    const pass  = f.pass.value;
-    const u = getUsers().find(x => x.email === email && x.passHash === hash(pass));
-    if (!u) { alert("Credenciales inválidas"); return; }
-    setSession({ email, nombre: u.nombre });
-    location.href = "perfil.html";
-  });
-}
+  const arr = getWorks().sort((a,b)=>a.fecha<b.fecha?1:-1);
+  tbody.innerHTML = arr.map((w,i)=>`
+    <tr>
+      <td>${i+1}</td>
+      <td>${w.titulo}</td>
+      <td><span class="badge">${w.tipo}</span></td>
+      <td>${formatDate(w.fecha)}</td>
+      <td>${w.descripcion}</td>
+      <td>${w.img?`<img src="${w.img}" style="width:64px;height:48px;object-fit:cover;border-radius:6px">`:"-"}</td>
+      <td>${w.reel?`<a class="btn" target="_blank" href="${w.reel}">Ver</a>`:"-"}</td>
+      <td ${admin?"":"style='display:none'"} >
+        <a class="btn" data-edit="${w.id}">Editar</a>
+        <a class="btn" data-del="${w.id}">Eliminar</a>
+      </td>
+    </tr>
+  `).join("");
 
-/********************
- * Perfil: mantenimientos del usuario
- ********************/
-function requireAuth() {
-  const s = getSession();
-  if (!s) location.href = "login.html";
-}
-
-const addMonths = (date, m) => { const d = new Date(date); d.setMonth(d.getMonth() + Number(m)); return d; };
-const fmt       = (d) => new Date(d).toLocaleDateString("es-AR");
-const keyMaint  = (email) => `maints_${email}`;
-const getMaints = (email) => JSON.parse(localStorage.getItem(keyMaint(email)) || "[]");
-const setMaints = (email, arr) => localStorage.setItem(keyMaint(email), JSON.stringify(arr));
-
-function bindPerfil() {
-  const s = getSession(); if (!s) return;
-  const w = qs("#bienvenida");
-  if (w) w.textContent = `Hola ${s.nombre}, acá podés registrar y ver tus mantenimientos.`;
-
-  const tbody = qs("#tbody-maint");
-  function renderTable() {
-    const rows = getMaints(s.email).map((m, i)=>`
-      <tr>
-        <td>${i+1}</td>
-        <td>${m.equipo}</td>
-        <td>${m.tipo}</td>
-        <td>${fmt(m.fechaISO)}</td>
-        <td>${m.periodoMeses} m</td>
-        <td>${fmt(m.proximaISO)}</td>
-        <td>${m.notas || ""}</td>
-      </tr>
-    `).join("");
-    tbody.innerHTML = rows || `<tr><td colspan="7" class="muted">Sin registros aún.</td></tr>`;
-  }
-  renderTable();
-
-  qs("#form-maint")?.addEventListener("submit", (e)=>{
-    e.preventDefault();
-    const fd = new FormData(e.currentTarget);
-    const equipo   = fd.get("equipo");
-    const tipo     = fd.get("tipo");
-    const fecha    = fd.get("fecha");
-    const periodo  = Number(fd.get("periodo"));
-    const notas    = fd.get("notas");
-    const proxima  = addMonths(fecha, periodo);
-    const arr = getMaints(s.email);
-    arr.push({
-      id: Date.now(),
-      equipo, tipo,
-      fechaISO: new Date(fecha).toISOString(),
-      periodoMeses: periodo,
-      proximaISO: proxima.toISOString(),
-      notas
-    });
-    setMaints(s.email, arr);
-    e.currentTarget.reset();
-    renderTable();
-    alert("Mantenimiento guardado ✔");
-  });
-
-  qs("#btn-logout")?.addEventListener("click", ()=>{
-    clearSession();
-    location.href = "../index.html";
-  });
-}
-
-/********************
- * Trabajos (público + admin)
- ********************/
-const OWNER_EMAIL = "veralautharo@gmail.com";
-const isOwner = () => {
-  const s = getSession();
-  return s && (s.email || "").toLowerCase() === OWNER_EMAIL.toLowerCase();
-};
-
-const LS_WORKS_KEY = "works";
-const getWorks = () => JSON.parse(localStorage.getItem(LS_WORKS_KEY) || "[]");
-const setWorks = (a) => localStorage.setItem(LS_WORKS_KEY, JSON.stringify(a));
-const fmtDate  = (d) => { try { return new Date(d).toLocaleDateString("es-AR"); } catch { return d || "-"; } };
-
-function seedWorksIfEmpty() {
-  try {
-    const cur = getWorks();
-    if (Array.isArray(cur) && cur.length === 0) {
-      setWorks([
-  {
-    id: 101,
-    titulo: "Cambio de pantalla Touch Notebook ACER",
-    tipo: "Reparación",
-    fecha: "2025-10-05",
-    descripcion: "Se procedió a cambiar el flex y pantalla touch de una notebook Acer.",
-    img: "../img/trabajo1.jpg",
-    reel: ""
-  },
-  {
-    id: 102,
-    titulo: "Limpieza + pasta térmica",
-    tipo: "Mantenimiento",
-    fecha: "2025-01-31",
-    descripcion: "Limpieza interna, cambio de pasta y revisión general.",
-    img: "../img/trabajo2.jpg",
-    reel: ""
-  }
-]);
-
-    }
-  } catch (e) { console.warn(e); }
-}
-
-function renderWorksPublic() {
-  const thead = qs("#thead-works");
-  const tbody = qs("#tbody-works");
-  const grid  = qs("#grid-works");
-  const owner = isOwner();
-
-  const works = getWorks().slice().sort((a,b)=>(b.fecha||"").localeCompare(a.fecha||""));
-
-  if (thead) {
-    thead.innerHTML = `
-      <tr>
-        <th>#</th>
-        <th>Título</th>
-        <th>Tipo</th>
-        <th>Fecha</th>
-        <th>Descripción</th>
-        <th>Imagen</th>
-        <th>Reel</th>
-        ${owner ? "<th>Acciones</th>" : ""}
-      </tr>
-    `;
-  }
-
-  if (tbody) {
-    tbody.innerHTML =
-      works.map((w,i)=>`
-        <tr>
-          <td>${i+1}</td>
-          <td>${w.titulo || "-"}</td>
-          <td><span class="badge">${w.tipo || ""}</span></td>
-          <td>${w.fecha ? fmtDate(w.fecha) : "-"}</td>
-          <td>${w.descripcion || "-"}</td>
-          <td>${w.img ? `<img src="${w.img}" alt="${w.titulo}" style="width:80px;height:60px;object-fit:cover;border-radius:6px">` : "-"}</td>
-          <td>${w.reel ? `<a class="btn" href="${w.reel}" target="_blank" rel="noopener">Ver</a>` : "-"}</td>
-          ${owner ? `
-          <td>
-            <button class="btn" onclick="editWork(${w.id})">Editar</button>
-            <button class="btn" onclick="deleteWork(${w.id})">Eliminar</button>
-          </td>` : ""}
-        </tr>
-      `).join("") || `<tr><td colspan="${owner?8:7}" class="muted">Aún no hay trabajos cargados.</td></tr>`;
-  }
-
-  if (grid) {
-    grid.innerHTML =
-      works.map(w => `
-        <article class="card">
-          ${w.img ? `<img src="${w.img}" alt="${w.titulo}">` : ""}
-          <div class="pad">
-            <h3>${w.titulo}</h3>
-            <p class="muted">${w.tipo || ""} ${w.fecha ? "· "+fmtDate(w.fecha) : ""}</p>
-            ${w.descripcion ? `<p>${w.descripcion}</p>` : ""}
-            ${w.reel ? `<p><a class="btn" href="${w.reel}" target="_blank" rel="noopener">Ver reel</a></p>` : ""}
-          </div>
-        </article>
-      `).join("") || `<p class="muted">Aún no hay trabajos cargados.</p>`;
+  if(admin){
+    tbody.querySelectorAll("[data-edit]").forEach(a=>a.addEventListener("click",()=>{
+      const id = a.getAttribute("data-edit");
+      const w = getWorks().find(x=>String(x.id)===String(id));
+      fillWorkForm(w); scrollTo({top:0,behavior:"smooth"});
+    }));
+    tbody.querySelectorAll("[data-del]").forEach(a=>a.addEventListener("click",()=>{
+      const id = a.getAttribute("data-del");
+      if(!confirm("¿Eliminar este trabajo?")) return;
+      setWorks(getWorks().filter(x=>String(x.id)!==String(id)));
+      renderTrabajos();
+    }));
   }
 }
 
-let editingWorkId = null;
+function bindAdminUI(){
+  const adminBox = document.getElementById("admin-box");
+  if (adminBox) adminBox.style.display = isAdmin()? "": "none";
 
-function bindWorksAdmin() {
-  const box      = qs("#admin-box");
-  const form     = qs("#form-work");
-  const btnCancel= qs("#btn-cancel");
-  const title    = qs("#admin-title");
-
-  if (!box || !form) return;
-
-  if (!isOwner()) { box.style.display = "none"; return; }
-  box.style.display = "block";
-
-  form.addEventListener("submit", (e)=>{
+  const clear = document.getElementById("w-clear");
+  const save  = document.getElementById("w-save");
+  if (clear) clear.addEventListener("click",(e)=>{e.preventDefault(); fillWorkForm({});});
+  if (save)  save.addEventListener("click",(e)=>{
     e.preventDefault();
-    const fd = new FormData(form);
-    const data = {
-      id: editingWorkId || Date.now(),
-      titulo: (fd.get("titulo") || "").trim(),
-      tipo: (fd.get("tipo") || "").trim(),
-      fecha: fd.get("fecha") || "",
-      descripcion: (fd.get("descripcion") || "").trim(),
-      img: (fd.get("img") || "").trim(),
-      reel: (fd.get("reel") || "").trim()
+    const q=(id)=>document.getElementById(id);
+    const id=q("w-id").value.trim();
+    const wNew={
+      id:id||Date.now(),
+      titulo:(q("w-title").value||"").trim(),
+      tipo:q("w-type").value,
+      fecha:q("w-date").value,
+      descripcion:(q("w-desc").value||"").trim(),
+      img:(q("w-img").value||"").trim(),
+      reel:(q("w-reel").value||"").trim(),
     };
-
-    if (!data.titulo || !data.tipo || !data.fecha) {
-      alert("Completá título, tipo y fecha.");
-      return;
-    }
-
-    const arr = getWorks();
-    const ix  = arr.findIndex(x => String(x.id) === String(data.id));
-
-    if (editingWorkId && ix >= 0) arr[ix] = data; // editar
-    else arr.push(data); // agregar
-
-    setWorks(arr);
-    renderWorksPublic();
-    form.reset();
-    editingWorkId = null;
-    if (title) title.textContent = "Agregar trabajo";
-    if (btnCancel) btnCancel.style.display = "none";
-    alert("Guardado ✔");
-  });
-
-  btnCancel?.addEventListener("click", ()=>{
-    form.reset();
-    editingWorkId = null;
-    if (title) title.textContent = "Agregar trabajo";
-    if (btnCancel) btnCancel.style.display = "none";
+    if(!wNew.titulo || !wNew.fecha) return alert("Completá Título y Fecha");
+    const arr=getWorks();
+    const i=arr.findIndex(x=>String(x.id)===String(id));
+    if(i>=0) arr[i]=wNew; else arr.push(wNew);
+    setWorks(arr); fillWorkForm({}); renderTrabajos();
   });
 }
 
-// Expuestas para usar en los botones inline de la tabla
-window.editWork = function(id){
-  if (!isOwner()) return;
-  const w = getWorks().find(x => String(x.id) === String(id));
-  if (!w) return alert("No se encontró el trabajo.");
-  const form = qs("#form-work");
-  const title = qs("#admin-title");
-  const btnCancel = qs("#btn-cancel");
-  if (!form) return;
+/* ========= INIT ========= */
+document.addEventListener("DOMContentLoaded",()=>{
+  actualizarNavegacion();
+  bindLoginPage();
+  bindLogout();
 
-  form.id.value          = w.id;
-  form.titulo.value      = w.titulo || "";
-  form.tipo.value        = w.tipo || "";
-  form.fecha.value       = w.fecha || "";
-  form.descripcion.value = w.descripcion || "";
-  form.img.value         = w.img || "";
-  form.reel.value        = w.reel || "";
+  renderRecursos();
+  renderTablaRecursos();
+  renderProducto();
 
-  editingWorkId = w.id;
-  if (title) title.textContent = "Editar trabajo";
-  if (btnCancel) btnCancel.style.display = "inline-block";
-  form.scrollIntoView({ behavior: "smooth", block: "start" });
-};
-
-window.deleteWork = function(id){
-  if (!isOwner()) return;
-  if (!confirm("¿Eliminar este trabajo?")) return;
-  const arr = getWorks().filter(x => String(x.id) !== String(id));
-  setWorks(arr);
-  renderWorksPublic();
-};
-
-/********************
- * INIT por página
- ********************/
-window.addEventListener("DOMContentLoaded", () => {
-  paintNavAuth();
-
-  // Si querés “semilla” de trabajos en localStorage:
-  seedWorksIfEmpty();
-
-  // Páginas bajo /pages/
-  if (location.pathname.endsWith("listado_tabla.html"))  renderTabla();
-  if (location.pathname.endsWith("listado_box.html"))    renderGrid();
-  if (location.pathname.endsWith("producto.html"))       renderFicha();
-  if (location.pathname.endsWith("comprar.html"))        renderCarrito();
-  if (location.pathname.endsWith("register.html"))       bindRegister();
-  if (location.pathname.endsWith("login.html"))          bindLogin();
-  if (location.pathname.endsWith("perfil.html"))         { requireAuth(); bindPerfil(); }
-  if (location.pathname.endsWith("trabajos.html"))       { renderWorksPublic(); bindWorksAdmin(); }
+  if (document.getElementById("tbody-works")){
+    seedWorksIfEmpty(); bindAdminUI(); renderTrabajos();
+  }
 });

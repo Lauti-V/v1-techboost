@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi Perfil — Tech.Boost_</title>
+  <link rel="stylesheet" href="../styles.css"><script src="../script.js" defer></script>
+</head>
+<body>
+  <div class="logo-container"><img src="../img/logo_tech.boost.png" alt="Logo" class="logo"></div>
+  <header class="site-header">
+    <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="listado_tabla.html">Tabla</a>
+      <a href="listado_box.html">Catálogo</a>
+      <a href="comprar.html" class="btn">Contacto</a>
+      <a href="login.html" id="nav-login">Ingresar</a>
+      <a aria-current="page" class="active btn btn-primary" href="perfil.html" id="nav-perfil">Mi Perfil</a>
+      <a href="../index.html">Inicio</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1>Mi Perfil</h1>
+    <p class="muted" id="bienvenida"></p>
+
+    <section class="feature">
+      <h2>Registrar mantenimiento</h2>
+      <form id="form-maint" class="form">
+        <label>Equipo
+          <select name="equipo" required>
+            <option value="">Seleccionar…</option>
+            <option>PC</option><option>Notebook</option><option>Consola</option><option>Otro</option>
+          </select>
+        </label>
+        <label>Tipo
+          <select name="tipo" required>
+            <option value="">Seleccionar…</option>
+            <option>Limpieza de polvo</option>
+            <option>Cambio de pasta térmica</option>
+            <option>Revisión general</option>
+            <option>Optimización del SO</option>
+          </select>
+        </label>
+        <label>Fecha realizada <input type="date" name="fecha" required></label>
+        <label>Período recomendado (meses) <input type="number" name="periodo" min="1" value="8" required></label>
+        <label>Notas <textarea name="notas" rows="3" placeholder="Observaciones…"></textarea></label>
+        <div class="form-actions">
+          <button class="btn" type="reset">Limpiar</button>
+          <button class="btn btn-primary" type="submit">Guardar</button>
+        </div>
+      </form>
+    </section>
+
+    <h2 class="page-title">Historial de mantenimientos</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <thead>
+          <tr><th>#</th><th>Equipo</th><th>Tipo</th><th>Realizado</th><th>Período</th><th>Próximo</th><th>Notas</th></tr>
+        </thead>
+        <tbody id="tbody-maint"></tbody>
+      </table>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn" id="btn-logout">Cerrar sesión</button>
+    </div>
+  </main>
+
+  <footer class="site-footer">© 2025 Tech.Boost_</footer>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tech.Boost_ — Inicio</title>
+
+  <!-- Evitar restauración del scroll -->
+  <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  </script>
+
+  <link rel="stylesheet" href="styles.css" />
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <!-- Logo superior -->
+  <div class="logo-container">
+    <img src="img/logo_tech.boost.png" alt="Logo Tech.Boost_" class="logo">
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a class="brand" href="index.html">🖥️ Tech.Boost_</a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="pages/listado_tabla.html">Tabla</a>
+      <a href="pages/listado_box.html">Catálogo</a>
+      <a href="pages/trabajos.html">Trabajos</a>
+      <a href="pages/comprar.html" class="btn">Contacto</a>
+      <a href="pages/login.html" id="nav-login">Ingresar</a>
+      <a href="pages/perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Hero principal -->
+    <section class="hero">
+      <div>
+        <h1>Repositorio personal de guías y recursos</h1>
+        <p class="lead">
+          Soy <strong>Lautaro Sebastián Vera</strong>, estudiante de Ingeniería en Sistemas (UCP).
+          De forma <strong>autodidacta</strong> me capacité en armado y reparación. En 2025 obtuve
+          el certificado “Reparación de PC, de cero a experto” con <strong>100/100</strong>.
+          En <strong>Tech.Boost_</strong> comparto armado, mantenimiento, reparación y optimización.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="pages/listado_box.html">Ver recursos</a>
+          <a class="btn" href="pages/listado_tabla.html">Ver en tabla</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sobre mí -->
+    <section class="about">
+      <h2>Quién soy</h2>
+      <p>
+        Todo lo relacionado con armado y reparación lo aprendí de forma <strong>autodidacta</strong>.
+        Este sitio centraliza mis guías y trabajos para que cualquier persona pueda aprender y mantener su equipo en buen estado.
+      </p>
+    </section>
+
+    <!-- Galería de Instagram (Elfsight) -->
+    <section class="feature" style="margin-top:24px">
+      <h2>Galería de Instagram</h2>
+      <div class="elfsight-wrap" tabindex="-1" style="max-width:1100px;margin:0 auto">
+        <div id="elfsight-app" class="elfsight-app-376c49a4-a32c-4405-9bb0-11f3c4da3698" data-elfsight-app-lazy></div>
+        <noscript>
+          <p class="muted">Para ver la galería activá JavaScript o visitá
+            <a class="btn" href="https://www.instagram.com/tech.boost_/" target="_blank" rel="noopener">@tech.boost_</a>.
+          </p>
+        </noscript>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">© 2025 Tech.Boost_ · Repositorio personal</footer>
+
+  <!-- Script para evitar salto inicial -->
+  <script>
+    window.addEventListener("load", () => window.scrollTo(0, 0));
+    document.addEventListener("DOMContentLoaded", () => window.scrollTo(0, 0));
+  </script>
+
+  <!-- Script de Elfsight (con retardo para evitar mover scroll) -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      setTimeout(() => {
+        const s = document.createElement("script");
+        s.src = "https://elfsightcdn.com/platform.js";
+        s.async = true;
+        document.body.appendChild(s);
+      }, 1000); // carga 1 segundo después
+    });
+  </script>
+</body>
+</html>

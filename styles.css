@@ -1,0 +1,422 @@
+/* ================================
+   VARIABLES DE COLOR Y DISEÑO
+================================ */
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --muted: #9aa4b2;
+  --txt: #e6eaf0;
+  --acc: #66d9ef;
+  --pri: #7ee787;
+
+  --radius: 16px;
+  --gap: 16px;
+  --w: 1100px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, .35);
+}
+
+/* ================================
+   RESETEO Y BASE GLOBAL
+================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font: 16px/1.5 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  color: var(--txt);
+  background: linear-gradient(180deg, #0e0f13, #0b0c10);
+}
+
+/* Enlaces y enfoque accesible */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--acc);
+  outline-offset: 2px;
+}
+
+/* Imágenes responsivas */
+img {
+  display: block;
+  max-width: 100%;
+}
+
+/* Modo sin animaciones (accesibilidad) */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ================================
+   CONTENEDOR GENERAL
+================================ */
+.container {
+  max-width: var(--w);
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* ================================
+   CABECERA Y NAVEGACIÓN
+================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 24px;
+  background: #0c0e13;
+  border-bottom: 1px solid #1e232d;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: var(--txt);
+}
+
+.site-nav a {
+  display: inline-block;
+  margin-left: 12px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  color: var(--txt);
+}
+
+.site-nav a.active {
+  background: #202532;
+}
+
+/* ================================
+   BOTONES
+================================ */
+.btn {
+  display: inline-block;
+  padding: 10px 14px;
+  border: 1px solid #2a3140;
+  border-radius: 10px;
+  color: var(--txt);
+  background: transparent;
+}
+
+.btn-primary {
+  border-color: transparent;
+  background: var(--pri);
+  color: #0d0f14;
+  font-weight: 700;
+}
+
+/* ================================
+   TEXTO Y TIPOGRAFÍA
+================================ */
+.lead {
+  color: var(--muted);
+}
+
+.page-title {
+  margin: 18px 0 8px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ================================
+   SECCIÓN HERO (INICIO)
+================================ */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  padding: 48px 0;
+  text-align: left;
+  justify-items: start;
+}
+
+.cta-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ================================
+   SECCIONES Y TARJETAS
+================================ */
+.feature {
+  background: var(--card);
+  padding: 18px;
+  border: 1px solid #262c39;
+  border-radius: var(--radius);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--gap);
+}
+
+/* Tarjetas del catálogo */
+.card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--card);
+  border: 1px solid #262c39;
+  border-radius: var(--radius);
+}
+
+.card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.card .pad {
+  padding: 12px;
+}
+
+/* Etiqueta pequeña (categoría o tipo) */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border: 1px solid #2a3140;
+  border-radius: 999px;
+  font-size: 12px;
+  color: var(--muted);
+  background: #202532;
+}
+
+/* ================================
+   TABLAS
+================================ */
+.table-wrap {
+  overflow: auto;
+  background: var(--card);
+  border: 1px solid #262c39;
+  border-radius: var(--radius);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid #262c39;
+}
+
+.table th {
+  text-align: left;
+  background: #1a1f2b;
+}
+
+/* ================================
+   FICHA DE PRODUCTO / DETALLE
+================================ */
+.product-detail {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 24px;
+  padding: 18px;
+  background: var(--card);
+  border: 1px solid #262c39;
+  border-radius: var(--radius);
+}
+
+.product-detail img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.specs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+/* ================================
+   FORMULARIOS
+================================ */
+.form {
+  display: grid;
+  gap: 18px;
+}
+
+fieldset {
+  padding: 16px;
+  border: 1px solid #262c39;
+  border-radius: 12px;
+}
+
+label {
+  display: grid;
+  gap: 6px;
+  margin: 6px 0;
+}
+
+input,
+select,
+textarea {
+  padding: 10px;
+  color: var(--txt);
+  background: #0f131a;
+  border: 1px solid #2a3140;
+  border-radius: 10px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid var(--acc);
+  border-color: transparent;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Lista de productos en contacto */
+.cart-list {
+  display: grid;
+  gap: 10px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between; /* separa el texto y el checkbox */
+  align-items: center;            /* centra verticalmente */
+  background: #131722;
+  border: 1px solid #262c39;
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+
+.cart-item span {
+  flex: 1;
+  color: var(--txt);
+}
+
+.cart-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--pri); /* color del check verde */
+  cursor: pointer;
+}
+
+
+/* ================================
+   MENSAJES Y ALERTAS
+================================ */
+.alert {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+}
+
+.success {
+  background: #0f2216;
+  border: 1px solid #245c38;
+}
+
+/* ================================
+   FOOTER
+================================ */
+.site-footer {
+  padding: 24px;
+  text-align: center;
+  color: #93a1b1;
+}
+
+/* ================================
+   UTILIDADES
+================================ */
+.sr-only {
+  position: absolute;
+  left: -9999px;
+}
+
+/* Logo centrado en la parte superior */
+.logo-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.logo {
+  max-width: 300px;
+  height: auto;
+}
+
+/* ================================
+   RESPONSIVE
+================================ */
+@media (max-width: 960px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .specs {
+    grid-template-columns: 1fr;
+  }
+}
+/* ====== LOGO SUPERIOR CENTRADO ====== */
+.logo-container {
+  text-align: center;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+.centered-logo img,
+.logo {
+  max-width: 300px;   /* tamaño ideal en todas las páginas */
+  height: auto;
+  display: inline-block;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Quita espacio innecesario entre logo y header */
+.site-header {
+  margin-top: 10px;
+}
+/* Ajuste final: logo centrado y sin espacio superior */
+.logo-container {
+  padding-top: 10px; /* reduce el espacio superior del logo */
+}
+
+.site-header {
+  margin-top: 0;      /* elimina margen entre logo y header */
+  padding-top: 5px;   /* deja solo un pequeño espacio */
+}

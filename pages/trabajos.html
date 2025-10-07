@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trabajos — Tech.Boost_</title>
+  <link rel="stylesheet" href="../styles.css">
+  <script src="../script.js" defer></script>
+</head>
+
+<body>
+  <div class="logo-container centered-logo">
+    <img src="../img/logo_tech.boost.png" alt="Logo Tech.Boost_" class="logo">
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="listado_tabla.html">Tabla</a>
+      <a href="listado_box.html">Catálogo</a>
+      <a href="trabajos.html" class="active">Trabajos</a>
+      <a href="comprar.html" class="btn">Contacto</a>
+      <a href="login.html" id="nav-login">Ingresar</a>
+      <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h1 class="page-title">Trabajos y mantenimientos realizados</h1>
+
+    <div class="table-wrap" style="margin-top:20px">
+      <table class="table">
+        <thead id="thead-works">
+          <!-- el JS inserta las columnas (con o sin 'Acciones' según sea admin) -->
+        </thead>
+        <tbody id="tbody-works"></tbody>
+      </table>
+    </div>
+
+    <!-- Panel de administración (solo visible para el owner) -->
+    <section id="admin-box" class="feature" style="margin-top:24px; display:none">
+      <h2 id="admin-title">Agregar trabajo</h2>
+      <form id="form-work" class="form">
+        <input type="hidden" name="id" />
+        <label>
+          Título
+          <input type="text" name="titulo" placeholder="Ej: Limpieza + pasta térmica" required />
+        </label>
+
+        <label>
+          Tipo
+          <select name="tipo" required>
+            <option value="">Seleccione</option>
+            <option>Reparación</option>
+            <option>Mantenimiento</option>
+            <option>Optimización</option>
+            <option>Armado</option>
+            <option>Software</option>
+            <option>Otros</option>
+          </select>
+        </label>
+
+        <label>
+          Fecha
+          <input type="date" name="fecha" required />
+        </label>
+
+        <label>
+          Descripción
+          <textarea name="descripcion" rows="3" placeholder="Detalles del trabajo"></textarea>
+        </label>
+
+        <label>
+          Imagen (URL o ruta ../img/archivo.jpg)
+          <input type="url" name="img" placeholder="../img/trabajo1.jpg" />
+        </label>
+
+        <label>
+          Reel de Instagram (opcional)
+          <input type="url" name="reel" placeholder="https://www.instagram.com/reel/XXXXXXXX/" />
+        </label>
+
+        <div class="form-actions">
+          <button type="button" id="btn-cancel" class="btn" style="display:none">Cancelar edición</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </div>
+      </form>
+    </section>
+
+    <h2 class="page-title">Galería</h2>
+    <div id="grid-works" class="grid"></div>
+  </main>
+
+  <footer class="site-footer">© 2025 Tech.Boost_</footer>
+</body>
+</html>

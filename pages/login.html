@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingresar — Tech.Boost_</title>
+  <link rel="stylesheet" href="../styles.css"><script src="../script.js" defer></script>
+</head>
+<body>
+  <div class="logo-container"><img src="../img/logo_tech.boost.png" alt="Logo" class="logo"></div>
+  <header class="site-header">
+    <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
+    <nav class="site-nav" aria-label="Principal">
+      <a href="listado_tabla.html">Tabla</a>
+      <a href="listado_box.html">Catálogo</a>
+      <a href="comprar.html" class="btn">Contacto</a>
+      <a aria-current="page" class="active" href="login.html" id="nav-login">Ingresar</a>
+      <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
+      <a href="../index.html">Inicio</a>
+    </nav>
+  </header>
+
+  <main class="container" style="max-width:560px">
+    <h1>Ingresar</h1>
+    <form id="form-login" class="form">
+      <label>E-mail <input required type="email" name="email"></label>
+      <label>Contraseña <input required type="password" name="pass"></label>
+      <div class="form-actions">
+        <a class="btn" href="register.html">Crear cuenta</a>
+        <button class="btn btn-primary" type="submit">Entrar</button>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">© 2025 Tech.Boost_</footer>
+</body>
+</html>

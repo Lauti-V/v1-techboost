@@ -5,40 +5,38 @@
   --radius:16px; --gap:16px; --w:1100px;
 }
 
-/* Reset mínimo */
+/* Reset */
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;font:16px/1.5 system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--txt);background:linear-gradient(180deg,#0e0f13,#0b0c10)}
 img{display:block;max-width:100%}
 
-/* Layout base */
+/* Layout */
 .container{max-width:var(--w);margin:auto;padding:24px}
-.site-header{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px 24px;background:#0c0e13;border-bottom:1px solid #1e232d;position:sticky;top:0;z-index:10}
-.brand{font-weight:800;text-decoration:none;color:var(--txt);letter-spacing:.3px}
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 24px;background:#0c0e13;border-bottom:1px solid #1e232d;position:sticky;top:0;z-index:20}
+.brand{font-weight:900;text-decoration:none;color:var(--txt);letter-spacing:.3px}
 .site-nav a{color:var(--txt);text-decoration:none;margin-left:12px;padding:8px 12px;border-radius:10px}
 .site-nav a.active{background:#202532}
-.site-nav .btn-primary{background:var(--pri);color:#0b0c10;font-weight:700}
 .btn{display:inline-block;border:1px solid var(--border);padding:10px 14px;border-radius:10px;color:var(--txt);text-decoration:none;background:transparent}
 .btn:hover{background:#202532}
 .btn-primary{background:var(--pri);color:#0d0f14;border-color:transparent}
-.lead{color:var(--muted)}
-.page-title{margin:18px 0 8px}
 
-/* Logo superior centrado (todas las páginas) */
+/* Logo arriba centrado */
 .logo-container{display:flex;justify-content:center;margin:8px 0 0}
-.logo{max-width:260px;height:auto}
+.logo{max-width:240px;height:auto}
 
-/* Hero (inicio) */
-.hero{display:grid;grid-template-columns:1fr;gap:24px;padding:24px 0}
-.cta-row{display:flex;gap:12px;margin-top:8px}
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr;gap:20px;padding:24px 0}
+.lead{color:var(--muted)}
+.cta-row{display:flex;gap:12px}
 
-/* Cards y grillas */
+/* Cards / Grid */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:var(--gap)}
 .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--shadow)}
 .card img{width:100%;height:160px;object-fit:cover}
 .card .pad{padding:12px}
 
-/* Tabla */
+/* Table */
 .table-wrap{overflow:auto;background:var(--card);border-radius:var(--radius);border:1px solid var(--border)}
 .table{width:100%;border-collapse:collapse}
 .table th,.table td{padding:12px 14px;border-bottom:1px solid var(--border)}
@@ -47,30 +45,25 @@ img{display:block;max-width:100%}
 /* Producto */
 .product-detail{display:grid;grid-template-columns:1fr 1.2fr;gap:24px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px}
 .product-detail img{width:100%;height:320px;object-fit:cover;border-radius:12px}
-.specs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
-/* Formularios */
+/* Forms */
 .form{display:grid;gap:18px}
 fieldset{border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--bg-soft)}
 label{display:grid;gap:6px;margin:6px 0}
 input,select,textarea{background:#0f131a;border:1px solid var(--border);border-radius:10px;padding:10px;color:var(--txt)}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);border-color:transparent}
 .form-actions{display:flex;gap:10px;justify-content:flex-end}
-
-/* Badges */
 .badge{display:inline-block;background:#202532;border:1px solid var(--border);color:var(--muted);padding:2px 8px;border-radius:999px;font-size:12px}
 
 /* Footer */
 .site-footer{padding:24px;text-align:center;color:#93a1b1}
 
-/* Accesibilidad */
-.sr-only{position:absolute;left:-9999px}
+/* Login tabs */
+.tabs{display:flex;gap:8px;margin-bottom:12px}
+.tab{padding:8px 12px;border:1px solid var(--border);border-radius:999px;cursor:pointer;color:var(--muted)}
+.tab.active{background:#202532;color:var(--txt)}
 
 /* Responsive */
 @media (max-width:960px){
   .product-detail{grid-template-columns:1fr}
-  .specs{grid-template-columns:1fr}
 }
-
-/* Ajustes para quitar huecos arriba */
-.site-header{margin-top:0;padding-top:8px}

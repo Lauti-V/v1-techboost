@@ -1,76 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>🖥️ Tech.Boost_ — Crear cuenta</title>
   <link rel="stylesheet" href="../styles.css">
   <script defer src="../script.js"></script>
 </head>
 <body>
-  <div class="logo-container">
-    <img src="../img/logo_tech.boost.png" alt="Logo Tech.Boost_" class="logo">
-  </div>
+  <div class="logo-container"><img class="logo" src="../img/logo_tech.boost.png" alt="Logo"></div>
 
   <header class="site-header">
     <a class="brand" href="../index.html">🖥️ Tech.Boost_</a>
     <nav class="site-nav">
-      <a href="listado_tabla.html">Tabla</a>
       <a href="listado_box.html">Catálogo</a>
       <a href="trabajos.html">Trabajos</a>
-      <a href="comprar.html">Contacto</a>
+      <a href="comprar.html" class="btn">Contacto</a>
       <a href="login.html" id="nav-login">Ingresar</a>
       <a href="perfil.html" id="nav-perfil" class="btn btn-primary" style="display:none">Mi Perfil</a>
     </nav>
   </header>
 
   <main class="container">
-    <h1>Crear una cuenta</h1>
+    <h1 class="page-title">Crear cuenta</h1>
     <form id="register-form" class="form">
-      <label>
-        Nombre completo
-        <input type="text" id="register-name" placeholder="Tu nombre completo" required>
-      </label>
-      <label>
-        Correo electrónico
-        <input type="email" id="register-email" placeholder="ejemplo@gmail.com" required>
-      </label>
-      <label>
-        Contraseña
-        <input type="password" id="register-password" placeholder="••••••••" required>
-      </label>
-      <button type="submit" class="btn btn-primary">Registrarse</button>
-      <p>¿Ya tenés cuenta? <a href="login.html">Iniciá sesión</a></p>
+      <label>Nombre <input id="register-name" type="text" required></label>
+      <label>Email <input id="register-email" type="email" required></label>
+      <label>Contraseña <input id="register-password" type="password" minlength="6" required></label>
+      <div class="form-actions">
+        <button class="btn btn-primary" type="submit">Registrarme</button>
+      </div>
+      <p class="lead">¿Ya tenés cuenta? <a href="login.html">Ingresar</a></p>
     </form>
   </main>
 
   <footer class="site-footer">© 2025 Tech.Boost_</footer>
-
-  <script>
-    document.getElementById('register-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const name = document.getElementById('register-name').value.trim();
-      const email = document.getElementById('register-email').value.trim();
-      const pass = document.getElementById('register-password').value.trim();
-
-      if (!name || !email || !pass) {
-        alert('Por favor completá todos los campos.');
-        return;
-      }
-
-      // Guardar usuario en localStorage
-      const users = JSON.parse(localStorage.getItem('tb_users') || '[]');
-      if (users.find(u => u.email === email)) {
-        alert('Este correo ya está registrado.');
-        return;
-      }
-
-      users.push({ name, email, pass });
-      localStorage.setItem('tb_users', JSON.stringify(users));
-      alert('Cuenta creada con éxito ✅');
-      location.href = 'login.html';
-    });
-  </script>
 </body>
 </html>
